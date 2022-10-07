@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class RESTprotoApplication {
 	
-	//Test
+	//Hei Simon
 	public static void main(String[] args) {
 		SpringApplication.run(RESTprotoApplication.class, args);
 	}
