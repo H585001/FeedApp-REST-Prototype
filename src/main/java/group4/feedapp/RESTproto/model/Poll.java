@@ -37,12 +37,12 @@ public class Poll {
 	@JsonIgnore
 	private FAUser creator;
 	
-	@OneToMany (fetch = FetchType.LAZY, mappedBy = "votePoll", cascade={CascadeType.REMOVE}, orphanRemoval=true)
+	@OneToMany (fetch = FetchType.LAZY, mappedBy = "votePoll", cascade={CascadeType.REMOVE})
 	@CascadeOnDelete
 	@JsonIgnore
 	private List<Vote> userVotes;
 	
-	@OneToMany (fetch = FetchType.LAZY, mappedBy = "iotVotePoll", cascade={CascadeType.REMOVE}, orphanRemoval=true)
+	@OneToMany (fetch = FetchType.LAZY, mappedBy = "iotVotePoll", cascade={CascadeType.REMOVE})
 	@CascadeOnDelete
 	@JsonIgnore
 	private List<IoTVotes> iotVotes;

@@ -25,12 +25,12 @@ public class FAUser {
     private String name;
     private boolean isAdmin;
     
-    @OneToMany(fetch = FetchType.LAZY, mappedBy="creator", cascade={CascadeType.REMOVE}, orphanRemoval=true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy="creator", cascade={CascadeType.REMOVE})
     @CascadeOnDelete
     @JsonIgnore
     private List<Poll> createdPolls;
     
-    @OneToMany (fetch = FetchType.LAZY, mappedBy = "voter", cascade={CascadeType.REMOVE},orphanRemoval=true)
+    @OneToMany (fetch = FetchType.LAZY, mappedBy = "voter", cascade={CascadeType.REMOVE})
     @CascadeOnDelete
     @JsonIgnore
     private List<Vote> votes;
