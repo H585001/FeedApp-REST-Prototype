@@ -59,7 +59,6 @@ public class PollService {
 	}
 	
 	public Poll deletePoll(Long id) {
-		// orphanRemoval = true takes care of removing the poll from the creators createdPoll's list ?
 		return pollDAO.deletePoll(id);
 	}
 	
@@ -75,6 +74,8 @@ public class PollService {
 	}
 	
 	public Vote voteOnPoll(Long pollId, Long userId, Vote vote) {
+		// TODO : check if the poll is open (status = 1)
+		
 		Poll poll = getPoll(pollId);
 		FAUser voter = userDAO.readUser(userId);
 		if(vote!= null && poll!= null && voter != null && voteDAO.findUserVote(poll, voter) == null) {
@@ -91,6 +92,28 @@ public class PollService {
 			userDAO.updateUser(voter.getId(), voter);
 			pollDAO.updatePoll(poll.getId(), poll);
 			return vote;
+		}else {
+			System.out.println("Vote error");
+		}
+		return null;
+	}
+	
+	public Vote voteOnPoll(Long pollId, Vote vote) {
+		// TODO : check if the poll is open (status = 1)
+		
+		Poll poll = getPoll(pollId);
+		if(vote!= null && poll!= null && poll.isPublic()) {
+			if(vote.getAnswer()) {
+				poll.setYesCount(poll.getYesCount() + 1);
+			}else {
+				poll.setNoCount(poll.getNoCount() + 1);
+			}
+			pollDAO.updatePoll(poll.getId(), poll);
+			return vote;
+		}else {
+			System.out.println("Vote error");
+			System.out.println("Vote: " + vote);
+			System.out.println("Poll: " + poll);
 		}
 		return null;
 	}

@@ -69,13 +69,25 @@ public class PollController {
         return null;
     }
     
+    @PostMapping("/polls/{id}")
+    public Poll voteOnPoll(@RequestBody Vote vote, @PathVariable Long id) {
+
+        Vote userVote = pollService.voteOnPoll(id, vote);
+
+        if (userVote != null) {
+        	return pollService.getPoll(id);
+        }
+        
+        return null;
+    }
+    
     @GetMapping("/polls/{pollId}/{userId}")
     public Vote getUserVoteOnPoll(@PathVariable Long pollId, @PathVariable Long userId) {
 
         Vote vote = pollService.getUserVote(pollId, userId);
 
         if (vote != null) {
-          return vote;
+        	return vote;
         }
         
         return null;
