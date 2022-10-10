@@ -34,6 +34,10 @@ public class IoTDeviceService {
 	public Collection<IoTDevice> getAllDevices() {
 		return iotDao.readIoTDevices();
 	}
+
+	public IoTDevice getDevice(Long id) {
+		return iotDao.readIoTDevice(id);
+	}
 	
 	
 

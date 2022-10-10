@@ -26,14 +26,19 @@ public class IoTController {
 		return deviceService.connectDeviceToPoll(id, poll);
 	}
 	
-	@GetMapping("/iot/{id}/poll")
-	public Poll getConnectedPoll(@PathVariable Long id) {
-		return deviceService.getConnectedPoll(id);
-	}
-	
 	@GetMapping("/iot")
 	public Collection<IoTDevice> getAllDevices() {
 		return deviceService.getAllDevices();
+	}
+	
+	@GetMapping("/iot/{id}")
+	public IoTDevice getDevice(@PathVariable Long id) {
+		return deviceService.getDevice(id);
+	}
+	
+	@GetMapping("/iot/{id}/poll")
+	public Poll getConnectedPoll(@PathVariable Long id) {
+		return deviceService.getConnectedPoll(id);
 	}
 	
 	@PostMapping("/iot/{id}/vote")
