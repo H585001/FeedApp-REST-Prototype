@@ -1,4 +1,4 @@
-package group4.feedapp.RESTproto.model;
+package group4.feedapp.API.model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

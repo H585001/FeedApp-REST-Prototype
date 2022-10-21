@@ -1,8 +1,8 @@
-package group4.feedapp.RESTproto.dao;
+package group4.feedapp.API.dao;
 
 import java.util.Collection;
 
-import group4.feedapp.RESTproto.model.FAUser;
+import group4.feedapp.API.model.FAUser;
 
 public interface FAUserDAO {
 	

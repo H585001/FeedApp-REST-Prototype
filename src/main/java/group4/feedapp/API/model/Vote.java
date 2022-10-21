@@ -1,4 +1,4 @@
-package group4.feedapp.RESTproto.model;
+package group4.feedapp.API.model;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;

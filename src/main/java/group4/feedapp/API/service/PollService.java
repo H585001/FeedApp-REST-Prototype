@@ -1,4 +1,4 @@
-package group4.feedapp.RESTproto.service;
+package group4.feedapp.API.service;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -6,16 +6,16 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import group4.feedapp.RESTproto.dao.FAUserDAO;
-import group4.feedapp.RESTproto.dao.IoTDeviceDAO;
-import group4.feedapp.RESTproto.dao.IoTVotesDAO;
-import group4.feedapp.RESTproto.dao.PollDAO;
-import group4.feedapp.RESTproto.dao.VoteDAO;
-import group4.feedapp.RESTproto.model.FAUser;
-import group4.feedapp.RESTproto.model.IoTDevice;
-import group4.feedapp.RESTproto.model.IoTVotes;
-import group4.feedapp.RESTproto.model.Poll;
-import group4.feedapp.RESTproto.model.Vote;
+import group4.feedapp.API.dao.FAUserDAO;
+import group4.feedapp.API.dao.IoTDeviceDAO;
+import group4.feedapp.API.dao.IoTVotesDAO;
+import group4.feedapp.API.dao.PollDAO;
+import group4.feedapp.API.dao.VoteDAO;
+import group4.feedapp.API.model.FAUser;
+import group4.feedapp.API.model.IoTDevice;
+import group4.feedapp.API.model.IoTVotes;
+import group4.feedapp.API.model.Poll;
+import group4.feedapp.API.model.Vote;
 
 
 @Service

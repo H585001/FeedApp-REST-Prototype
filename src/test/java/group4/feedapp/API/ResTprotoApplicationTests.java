@@ -1,4 +1,4 @@
-package group4.feedapp.RESTproto;
+package group4.feedapp.API;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

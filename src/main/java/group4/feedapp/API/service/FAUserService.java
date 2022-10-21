@@ -1,4 +1,4 @@
-package group4.feedapp.RESTproto.service;
+package group4.feedapp.API.service;
 
 import java.util.Collection;
 
@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import group4.feedapp.RESTproto.dao.FAUserDAO;
-import group4.feedapp.RESTproto.model.FAUser;
+import group4.feedapp.API.dao.FAUserDAO;
+import group4.feedapp.API.model.FAUser;
 
 @Service
 public class FAUserService {

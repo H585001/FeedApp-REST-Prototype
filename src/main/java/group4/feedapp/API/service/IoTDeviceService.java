@@ -1,14 +1,14 @@
-package group4.feedapp.RESTproto.service;
+package group4.feedapp.API.service;
 
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import group4.feedapp.RESTproto.dao.IoTDeviceDAO;
-import group4.feedapp.RESTproto.dao.IoTVotesDAO;
-import group4.feedapp.RESTproto.model.IoTDevice;
-import group4.feedapp.RESTproto.model.Poll;
+import group4.feedapp.API.dao.IoTDeviceDAO;
+import group4.feedapp.API.dao.IoTVotesDAO;
+import group4.feedapp.API.model.IoTDevice;
+import group4.feedapp.API.model.Poll;
 
 @Service
 public class IoTDeviceService {

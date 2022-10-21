@@ -1,10 +1,10 @@
-package group4.feedapp.RESTproto.dao;
+package group4.feedapp.API.dao;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
 
-import group4.feedapp.RESTproto.model.FAUser;
-import group4.feedapp.RESTproto.model.Poll;
+import group4.feedapp.API.model.FAUser;
+import group4.feedapp.API.model.Poll;
 
 public interface PollDAO {
 	Poll createPoll(String question, int noCount, int yesCount, LocalDateTime startTime, LocalDateTime endTime,

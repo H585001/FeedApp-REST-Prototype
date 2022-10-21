@@ -1,13 +1,13 @@
-package group4.feedapp.RESTproto.controller;
+package group4.feedapp.API.controller;
 import java.util.Collection;
 
 import org.springframework.web.bind.annotation.*;
 
-import group4.feedapp.RESTproto.model.IoTDevice;
-import group4.feedapp.RESTproto.model.IoTVotes;
-import group4.feedapp.RESTproto.model.Poll;
-import group4.feedapp.RESTproto.service.IoTDeviceService;
-import group4.feedapp.RESTproto.service.PollService;
+import group4.feedapp.API.model.IoTDevice;
+import group4.feedapp.API.model.IoTVotes;
+import group4.feedapp.API.model.Poll;
+import group4.feedapp.API.service.IoTDeviceService;
+import group4.feedapp.API.service.PollService;
 
 @RestController
 public class IoTController {

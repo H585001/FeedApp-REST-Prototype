@@ -1,4 +1,4 @@
-package group4.feedapp.RESTproto;
+package group4.feedapp.API;
 
 import java.util.Collection;
 
@@ -6,16 +6,16 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import group4.feedapp.RESTproto.dao.FAUserDAO;
-import group4.feedapp.RESTproto.dao.FAUserDAOImplementation;
-import group4.feedapp.RESTproto.model.FAUser;
-import group4.feedapp.RESTproto.model.IoTDevice;
-import group4.feedapp.RESTproto.model.IoTVotes;
-import group4.feedapp.RESTproto.model.Poll;
-import group4.feedapp.RESTproto.model.Vote;
+import group4.feedapp.API.dao.FAUserDAO;
+import group4.feedapp.API.dao.FAUserDAOImplementation;
+import group4.feedapp.API.model.FAUser;
+import group4.feedapp.API.model.IoTDevice;
+import group4.feedapp.API.model.IoTVotes;
+import group4.feedapp.API.model.Poll;
+import group4.feedapp.API.model.Vote;
 
 public class PopulateDatabase {
-	private static final String PERSISTENCE_UNIT_NAME = "feedapp-RESTproto-group4";
+	private static final String PERSISTENCE_UNIT_NAME = "feedapp-derby";
 	private static EntityManagerFactory factory;
 
 	public static void main(String[] args) {        

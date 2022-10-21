@@ -1,4 +1,4 @@
-package group4.feedapp.RESTproto.controller;
+package group4.feedapp.API.controller;
 
 import java.util.Collection;
 
@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import group4.feedapp.RESTproto.model.FAUser;
-import group4.feedapp.RESTproto.model.Poll;
-import group4.feedapp.RESTproto.model.Vote;
-import group4.feedapp.RESTproto.service.FAUserService;
-import group4.feedapp.RESTproto.service.PollService;
+import group4.feedapp.API.model.FAUser;
+import group4.feedapp.API.model.Poll;
+import group4.feedapp.API.model.Vote;
+import group4.feedapp.API.service.FAUserService;
+import group4.feedapp.API.service.PollService;
 
 @RestController
 public class PollController {

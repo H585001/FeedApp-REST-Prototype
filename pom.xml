@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>group4.feedapp</groupId>
-	<artifactId>RESTproto</artifactId>
+	<artifactId>FeedApp-API</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>RESTproto</name>
-	<description>Prototype REST project for FeedApp</description>
+	<name>FeedApp-API</name>
+	<description>API for FeedApp</description>
 	<properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source>

@@ -1,9 +1,9 @@
-package group4.feedapp.RESTproto.dao;
+package group4.feedapp.API.dao;
 
 import java.util.Collection;
 
-import group4.feedapp.RESTproto.model.IoTDevice;
-import group4.feedapp.RESTproto.model.Poll;
+import group4.feedapp.API.model.IoTDevice;
+import group4.feedapp.API.model.Poll;
 
 public interface IoTDeviceDAO {
 	IoTDevice createIoTDevice(IoTDevice device);

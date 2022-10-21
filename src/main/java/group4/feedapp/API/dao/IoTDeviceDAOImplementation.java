@@ -1,4 +1,4 @@
-package group4.feedapp.RESTproto.dao;
+package group4.feedapp.API.dao;
 
 import java.util.Collection;
 
@@ -10,13 +10,13 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 
-import group4.feedapp.RESTproto.model.IoTDevice;
-import group4.feedapp.RESTproto.model.Poll;
+import group4.feedapp.API.model.IoTDevice;
+import group4.feedapp.API.model.Poll;
 
 @Repository
 public class IoTDeviceDAOImplementation implements IoTDeviceDAO{
 	private EntityManagerFactory emf;
-	private static final String PERSISTENCE_UNIT_NAME = "feedapp-RESTproto-group4";
+	private static final String PERSISTENCE_UNIT_NAME = "feedapp-derby";
 	
 	public IoTDeviceDAOImplementation() {
 		emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);

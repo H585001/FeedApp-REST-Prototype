@@ -1,30 +1,31 @@
-package group4.feedapp.RESTproto.dao;
+package group4.feedapp.API.dao;
 
-import java.time.LocalDateTime;
 import java.util.Collection;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 
-import group4.feedapp.RESTproto.model.FAUser;
-import group4.feedapp.RESTproto.model.Poll;
+import group4.feedapp.API.model.FAUser;
+import group4.feedapp.API.model.Poll;
+import group4.feedapp.API.model.Vote;
 
 @Repository
-public class PollDAOImplementation implements PollDAO {
+public class VoteDAOImplementation implements VoteDAO {
 	private EntityManagerFactory emf;
-	private static final String PERSISTENCE_UNIT_NAME = "feedapp-RESTproto-group4";
+	private static final String PERSISTENCE_UNIT_NAME = "feedapp-derby";
 	
-	public PollDAOImplementation() {
+	public VoteDAOImplementation() {
 		emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 	}
-	
+
 	@Override
-	public Poll createPoll(Poll newPoll) {
+	public Vote createVote(Vote vote) {
 		EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         
@@ -32,7 +33,7 @@ public class PollDAOImplementation implements PollDAO {
 
 		try {
 			tx.begin();
-			em.persist(newPoll);
+			em.persist(vote);
 			tx.commit();
 		} catch (Throwable e) {
 			e.printStackTrace();
@@ -42,26 +43,25 @@ public class PollDAOImplementation implements PollDAO {
 			}
 		} finally {
 			em.close();
-		}		
+		}	
 		
 		if(!success){
 			return null;
 		};
-		return newPoll;
+		return vote;
 	}
 
 	@Override
-	public Poll createPoll(String question, int noCount, int yesCount, LocalDateTime startTime,
-			LocalDateTime endTime, boolean isPublic, int status, String accessCode, FAUser creator) {
+	public Vote createVote(FAUser voter, Poll votePoll, boolean answer) {
 		EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         
         boolean success = true;
-        Poll poll = new Poll(question, noCount, yesCount, startTime, endTime, isPublic, status, accessCode, creator);
+        Vote vote = new Vote(voter, votePoll, answer);
 
 		try {
 			tx.begin();
-			em.persist(poll);
+			em.persist(vote);
 			tx.commit();
 		} catch (Throwable e) {
 			e.printStackTrace();
@@ -71,35 +71,51 @@ public class PollDAOImplementation implements PollDAO {
 			}
 		} finally {
 			em.close();
-		}		
+		}	
 		
 		if(!success){
 			return null;
 		};
-		return poll;
+		return vote;
 	}
 
 	@Override
-	public Poll readPoll(Long id) {
+	public Vote readVote(Long id) {
 		EntityManager em = emf.createEntityManager();        
-        Poll poll = null;
+        Vote vote = null;
 
 		try {
-			poll = em.find(Poll.class, id);
+			vote = em.find(Vote.class, id);
 		} catch (Throwable e) {
 			e.printStackTrace();
 		} finally {
 			em.close();
 		}		
-		return poll;
+		return vote;
 	}
 
 	@Override
-	public Collection<Poll> readPolls() {
+	public Vote findUserVote(Poll poll, FAUser user) {
+		EntityManager em = emf.createEntityManager();        
+        Vote vote = null;
+		try {
+			TypedQuery<Vote> q = em.createQuery("SELECT v FROM Vote v WHERE v.voter = :user AND v.votePoll = :poll", Vote.class);
+			q.setParameter("user", user);
+			q.setParameter("poll", poll);
+			vote = q.getSingleResult();
+		} catch (NoResultException e) {
+			
+		} finally {
+			em.close();
+		}		
+		return vote;
+	}
+
+	@Override
+	public Collection<Vote> readVotes() {
 		EntityManager em = emf.createEntityManager();
 		try {
-			TypedQuery<Poll> query = em.createQuery(
-					"SELECT p FROM Poll p", Poll.class);
+			TypedQuery<Vote> query = em.createQuery("SELECT v FROM Vote v", Vote.class);
 			return query.getResultList();
 		} finally {
 			em.close();
@@ -107,28 +123,51 @@ public class PollDAOImplementation implements PollDAO {
 	}
 
 	@Override
-	public Poll updatePoll(Long id, Poll updatedPoll) {
+	public Vote updateVote(Long id, Vote updatedVote) {
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		
-        Poll poll = null;
+        Vote vote = null;
         boolean success = true;
         
 		try {
 			tx.begin();
-			poll = em.find(Poll.class, id);
-			if(poll != null && updatedPoll != null) {
-				poll.setAccessCode(updatedPoll.getAccessCode());
-				poll.setCreator(updatedPoll.getCreator());
-				poll.setStartTime(updatedPoll.getStartTime());
-				poll.setEndTime(updatedPoll.getStartTime());
-				poll.setStatus(updatedPoll.getStatus());
-				poll.setIotVotes(updatedPoll.getIotVotes());
-				poll.setUserVotes(updatedPoll.getUserVotes());
-				poll.setNoCount(updatedPoll.getNoCount());
-				poll.setYesCount(updatedPoll.getYesCount());
-				poll.setPublic(updatedPoll.isPublic());
-				poll.setQuestion(updatedPoll.getQuestion());
+			vote = em.find(Vote.class, id);
+			if(vote != null && updatedVote != null) {
+				vote.setAnswer(updatedVote.getAnswer());
+				vote.setVotePoll(updatedVote.getVotePoll());
+				vote.setVoter(updatedVote.getVoter());
+			}
+			tx.commit();
+		} catch (Throwable e) {
+			e.printStackTrace();
+			success = false;
+			if (tx.isActive()) {
+				tx.rollback();
+			}
+		} finally {
+			em.close();
+		}		
+		
+		if(!success){
+			return null;
+		};
+		return vote;
+	}
+
+	@Override
+	public Vote deleteVote(Long id) {
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		
+        Vote vote = null;
+        boolean success = true;
+        
+		try {
+			tx.begin();
+			vote = em.find(Vote.class, id);
+			if(vote != null) {
+				em.remove(vote);
 			}
 			tx.commit();
 		} catch (Throwable e) {
@@ -144,54 +183,7 @@ public class PollDAOImplementation implements PollDAO {
 		if(!success){
 			return null;
 		};
-		return poll;
-	}
-
-	@Override
-	public Poll deletePoll(Long id) {
-		EntityManager em = emf.createEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		
-        Poll poll = null;
-        boolean success = true;
-        
-		try {
-			tx.begin();
-			poll = em.find(Poll.class, id);
-			if(poll != null) {
-				em.remove(poll);
-			}
-			tx.commit();
-		} catch (Throwable e) {
-			e.printStackTrace();
-			success = false;
-			if (tx.isActive()) {
-				tx.rollback();
-			}
-		} finally {
-			em.close();
-		}		
-		
-		if(!success){
-			return null;
-		};
-		return poll;
-	}
-
-	@Override
-	public Collection<Poll> getUserPolls(FAUser user) {
-		EntityManager em = emf.createEntityManager();
-		Collection<Poll> polls = null;
-		
-		try {
-			TypedQuery<Poll> query = em.createQuery(
-					"SELECT p FROM Poll p WHERE p.creator = :user", Poll.class);
-			query.setParameter("user", user);
-			polls = query.getResultList();
-		} finally {
-			em.close();
-		}
-		return polls;
+		return vote;
 	}
 
 }

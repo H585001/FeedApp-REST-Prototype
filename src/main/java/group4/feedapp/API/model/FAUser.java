@@ -1,4 +1,4 @@
-package group4.feedapp.RESTproto.model;
+package group4.feedapp.API.model;
 
 import java.util.ArrayList;
 import java.util.List;

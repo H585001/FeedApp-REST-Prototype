@@ -1,13 +1,13 @@
-package group4.feedapp.RESTproto;
+package group4.feedapp.API;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RESTprotoApplication {
+public class FeedAppRESTApplication {
 	
 	public static void main(String[] args) {
-		SpringApplication.run(RESTprotoApplication.class, args);
+		SpringApplication.run(FeedAppRESTApplication.class, args);
 	}
 
 }

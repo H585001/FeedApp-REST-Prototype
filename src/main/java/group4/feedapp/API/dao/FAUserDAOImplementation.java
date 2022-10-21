@@ -1,39 +1,37 @@
-package group4.feedapp.RESTproto.dao;
+package group4.feedapp.API.dao;
 
 import java.util.Collection;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 
-import group4.feedapp.RESTproto.model.FAUser;
-import group4.feedapp.RESTproto.model.Poll;
-import group4.feedapp.RESTproto.model.Vote;
+import group4.feedapp.API.model.FAUser;
+
 
 @Repository
-public class VoteDAOImplementation implements VoteDAO {
+public class FAUserDAOImplementation implements FAUserDAO {
 	private EntityManagerFactory emf;
-	private static final String PERSISTENCE_UNIT_NAME = "feedapp-RESTproto-group4";
+	private static final String PERSISTENCE_UNIT_NAME = "feedapp-derby";
 	
-	public VoteDAOImplementation() {
+	public FAUserDAOImplementation() {
 		emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 	}
-
+	
 	@Override
-	public Vote createVote(Vote vote) {
-		EntityManager em = emf.createEntityManager();
+	public FAUser createUser(FAUser user) {
+        EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         
         boolean success = true;
 
 		try {
 			tx.begin();
-			em.persist(vote);
+			em.persist(user);
 			tx.commit();
 		} catch (Throwable e) {
 			e.printStackTrace();
@@ -48,20 +46,20 @@ public class VoteDAOImplementation implements VoteDAO {
 		if(!success){
 			return null;
 		};
-		return vote;
+		return user;
 	}
 
 	@Override
-	public Vote createVote(FAUser voter, Poll votePoll, boolean answer) {
-		EntityManager em = emf.createEntityManager();
+	public FAUser createUser(String email, String password, String name, boolean isAdmin) {
+        EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         
         boolean success = true;
-        Vote vote = new Vote(voter, votePoll, answer);
+        FAUser user = new FAUser(email, password, name, isAdmin);
 
 		try {
 			tx.begin();
-			em.persist(vote);
+			em.persist(user);
 			tx.commit();
 		} catch (Throwable e) {
 			e.printStackTrace();
@@ -76,67 +74,53 @@ public class VoteDAOImplementation implements VoteDAO {
 		if(!success){
 			return null;
 		};
-		return vote;
+		return user;
 	}
 
 	@Override
-	public Vote readVote(Long id) {
+	public FAUser readUser(Long id) {
 		EntityManager em = emf.createEntityManager();        
-        Vote vote = null;
-
+        FAUser user = null;
 		try {
-			vote = em.find(Vote.class, id);
+			user = em.find(FAUser.class, id);
 		} catch (Throwable e) {
 			e.printStackTrace();
 		} finally {
 			em.close();
 		}		
-		return vote;
+		return user;
 	}
-
+	
 	@Override
-	public Vote findUserVote(Poll poll, FAUser user) {
-		EntityManager em = emf.createEntityManager();        
-        Vote vote = null;
-		try {
-			TypedQuery<Vote> q = em.createQuery("SELECT v FROM Vote v WHERE v.voter = :user AND v.votePoll = :poll", Vote.class);
-			q.setParameter("user", user);
-			q.setParameter("poll", poll);
-			vote = q.getSingleResult();
-		} catch (NoResultException e) {
-			
-		} finally {
-			em.close();
-		}		
-		return vote;
-	}
-
-	@Override
-	public Collection<Vote> readVotes() {
+	public Collection<FAUser> readUsers() {
 		EntityManager em = emf.createEntityManager();
 		try {
-			TypedQuery<Vote> query = em.createQuery("SELECT v FROM Vote v", Vote.class);
+			TypedQuery<FAUser> query = em.createQuery(
+					"SELECT u FROM FAUser u", FAUser.class);
 			return query.getResultList();
 		} finally {
 			em.close();
 		}
 	}
-
+	
 	@Override
-	public Vote updateVote(Long id, Vote updatedVote) {
+	public FAUser updateUser(Long id, FAUser updatedUser) {
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		
-        Vote vote = null;
+        FAUser user = null;
         boolean success = true;
         
 		try {
 			tx.begin();
-			vote = em.find(Vote.class, id);
-			if(vote != null && updatedVote != null) {
-				vote.setAnswer(updatedVote.getAnswer());
-				vote.setVotePoll(updatedVote.getVotePoll());
-				vote.setVoter(updatedVote.getVoter());
+			user = em.find(FAUser.class, id);
+			if(user != null && updatedUser != null) {
+				user.setEmail(updatedUser.getEmail());
+				user.setAdmin(updatedUser.isAdmin());
+				user.setName(updatedUser.getName());
+				//user.setCreatedPolls(updatedUser.getCreatedPolls());
+				user.setPassword(updatedUser.getPassword());
+				user.setVotes(updatedUser.getVotes());
 			}
 			tx.commit();
 		} catch (Throwable e) {
@@ -152,22 +136,22 @@ public class VoteDAOImplementation implements VoteDAO {
 		if(!success){
 			return null;
 		};
-		return vote;
+		return user;
 	}
 
 	@Override
-	public Vote deleteVote(Long id) {
+	public FAUser deleteUser(Long id) {
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		
-        Vote vote = null;
+        FAUser user = null;
         boolean success = true;
         
 		try {
 			tx.begin();
-			vote = em.find(Vote.class, id);
-			if(vote != null) {
-				em.remove(vote);
+			user = em.find(FAUser.class, id);
+			if(user != null) {
+				em.remove(user);
 			}
 			tx.commit();
 		} catch (Throwable e) {
@@ -183,7 +167,7 @@ public class VoteDAOImplementation implements VoteDAO {
 		if(!success){
 			return null;
 		};
-		return vote;
-	}
-
+		return user;
+	}	
+	
 }
